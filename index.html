@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penagos | Despulpadora de Café Serie DCV</title>
     
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -137,37 +135,17 @@
             font-weight: 700;
         }
         .viewer-wrapper {
-            position: relative; /* Añadido para posicionar el loader */
             height: 70vh;
             max-height: 650px;
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.08);
             border: 1px solid var(--border-color);
-            background-color: var(--bg-light-gray); /* Fondo mientras carga */
         }
-        .viewer-wrapper a-scene {
+        .viewer-wrapper iframe {
             width: 100%;
             height: 100%;
-        }
-
-        /* --- Indicador de Carga --- */
-        .loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-weight: 700;
-            color: var(--primary-text-color);
-            transition: opacity 0.5s ease;
-        }
-        .loader.hidden {
-            opacity: 0;
-            pointer-events: none;
+            border: 0;
         }
 
         /* --- Features Section --- */
@@ -222,7 +200,11 @@
             transform: translateY(0);
         }
 
-        @media (max-width: 992px) { .hero-content h1 { font-size: 3.5rem; } }
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .hero-content h1 { font-size: 3.5rem; }
+        }
+
         @media (max-width: 768px) {
             .content-section { padding: 80px 0; }
             .hero-content h1 { font-size: 2.5rem; letter-spacing: -1px; }
@@ -280,15 +262,7 @@
                     <h2>Explore cada detalle.</h2>
                 </div>
                 <div class="viewer-wrapper reveal-on-scroll">
-                    <div id="loader" class="loader">Cargando modelo 3D...</div>
-                    <a-scene embedded renderer="colorManagement: true;">
-                        <a-assets>
-                            <a-asset-item id="machine-model" src="untitled.glb"></a-asset-item>
-                        </a-assets>
-                        <a-entity environment="preset: studio; groundColor: #444; shadow: true;"></a-entity>
-                        <a-entity id="model-entity" gltf-model="#machine-model" position="0 1 0" shadow="cast: true"></a-entity>
-                        <a-entity camera look-controls orbit-controls="target: 0 1 0; minDistance: 1.5; maxDistance: 8; initialPosition: 2 1.5 2.5"></a-entity>
-                    </a-scene>
+                    <iframe src="https://www.lookiar.com/models/4f73959e9307ce5e526e659ee48f5a2b/view" frameborder="0" allow="xr-spatial-tracking *;fullscreen *"></iframe>
                 </div>
             </div>
         </section>
@@ -309,30 +283,22 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Script para el indicador de carga del modelo 3D ---
-            const modelEntity = document.querySelector('#model-entity');
-            const loader = document.querySelector('#loader');
-
-            modelEntity.addEventListener('model-loaded', () => {
-                // El modelo ha terminado de cargar, ocultamos el indicador
-                loader.classList.add('hidden');
-            });
-            
-            // --- Script para las animaciones de scroll ---
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
                 threshold: 0.15
             };
+
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
+                        observer.unobserve(entry.target); // Dejar de observar una vez que es visible
                     }
                 });
             }, observerOptions);
 
+            // Observar todos los elementos que tienen la clase de revelado
             const elementsToReveal = document.querySelectorAll('.reveal-on-scroll');
             elementsToReveal.forEach(element => {
                 observer.observe(element);
