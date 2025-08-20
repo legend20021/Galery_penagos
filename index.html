@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penagos | Despulpadora de Café Serie DCV</title>
+    <title>Penagos</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,13 +12,15 @@
     <style>
         :root {
             --bg-color: #ffffff;
-            --bg-light-gray: #f7f7f7;
+            --bg-light-gray: #f7f7ff;
             --primary-text-color: #1d1d1f;
             --secondary-text-color: #555555;
             --accent-color: #FAB900;
             --border-color: #e5e5e5;
+            --whatsapp-color: #25D366;
             --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-            --transition-speed: 0.6s;
+            --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         * {
@@ -37,14 +39,94 @@
             color: var(--primary-text-color);
             overflow-x: hidden;
         }
+        
+        /* --- Transición Splash Screen --- */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-light-gray);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease-out 0.8s, visibility 0s 1.4s;
+        }
+        
+        #splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
 
+        #splash-screen.hidden .splash-content {
+            opacity: 0;
+            transition: opacity 0.4s ease-out;
+        }
+        
+        .page-content {
+            clip-path: circle(0% at 50% 50%);
+            transition: clip-path 1s var(--ease-out-quint) 0.3s;
+        }
+
+        .page-content.visible {
+            clip-path: circle(150% at 50% 50%);
+        }
+
+        .splash-content {
+            text-align: center;
+            position: relative;
+            z-index: 1001;
+            perspective: 800px;
+        }
+
+        .splash-content > * {
+            opacity: 0;
+        }
+
+        .splash-content .github-logo {
+            width: 70px;
+            height: 70px;
+            fill: var(--primary-text-color);
+            margin-bottom: 20px;
+            animation: logo-flip-in 1.2s var(--ease-out-back) forwards;
+        }
+
+        .splash-content .developer-text {
+            font-size: 1.3rem;
+            color: var(--secondary-text-color);
+            margin-bottom: 15px;
+            animation: text-fade-up 0.8s ease-out forwards 0.8s;
+        }
+        
+        .splash-content .github-link {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--primary-text-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            animation: text-fade-up 0.8s ease-out forwards 1.2s;
+        }
+        
+        @keyframes logo-flip-in {
+            from { opacity: 0; transform: rotateY(-180deg) scale(0.6); }
+            to { opacity: 1; transform: rotateY(0deg) scale(1); }
+        }
+
+        @keyframes text-fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Diseño Compacto --- */
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* --- Header --- */
         .main-header {
             position: absolute;
             top: 0;
@@ -56,7 +138,7 @@
 
         .main-header .container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
         }
         
@@ -65,29 +147,33 @@
         }
         
         .cta-button {
-            background-color: var(--accent-color);
-            color: var(--primary-text-color);
+            background-color: var(--whatsapp-color);
+            color: white;
             text-decoration: none;
-            padding: 12px 28px;
-            border-radius: 30px;
+            padding: 14px 32px;
+            border-radius: 100px;
             font-weight: 700;
+            font-size: 1.1rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
         }
 
-        /* --- Hero Section --- */
         .hero-section {
             background-color: var(--bg-light-gray);
-            height: 100vh;
             min-height: 600px;
             display: flex;
+            justify-content: center;
             align-items: center;
-            padding-top: 80px; /* Offset for header */
             text-align: center;
+            padding-top: 80px;
+            padding-bottom: 40px;
         }
 
         .hero-content {
@@ -95,210 +181,251 @@
         }
         
         .hero-content .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--accent-color);
             margin-bottom: 10px;
         }
 
         .hero-content h1 {
-            font-size: 4.5rem;
+            font-size: 3.8rem;
             font-weight: 900;
             line-height: 1.1;
             letter-spacing: -2px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .hero-content p {
-            font-size: 1.2rem;
-            line-height: 1.7;
+            font-size: 1.1rem;
+            line-height: 1.6;
             color: var(--secondary-text-color);
-            margin-bottom: 30px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-
-        /* --- General Section Styling --- */
+        
         .content-section {
-            padding: 100px 0;
+            padding: 70px 0;
             border-bottom: 1px solid var(--border-color);
         }
         
-        /* --- 3D Viewer Section --- */
-        .viewer-section .container {
-            max-width: 1200px;
-        }
-        .viewer-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .viewer-title h2 {
+        .section-title h2 {
             font-size: 2.5rem;
             font-weight: 700;
+            letter-spacing: -1px;
+            text-align: center;
+            margin-bottom: 40px;
         }
+
         .viewer-wrapper {
-            height: 70vh;
-            max-height: 650px;
+            height: 60vh;
+            max-height: 550px;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             border: 1px solid var(--border-color);
         }
         .viewer-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
+            width: 100%; height: 100%; border: 0;
         }
 
-        /* --- Features Section --- */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
             text-align: center;
         }
+
         .feature-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
         }
+
         .feature-item p {
             color: var(--secondary-text-color);
-            line-height: 1.6;
+            line-height: 1.5;
+            font-size: 0.95rem;
         }
+
         .feature-item svg {
-            width: 40px;
-            height: 40px;
+            width: 36px; height: 36px;
             color: var(--accent-color);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
-        /* --- Call to Action Section --- */
         .cta-section {
-            background-color: var(--primary-text-color);
-            color: #ffffff;
+            background-color: var(--bg-color);
             text-align: center;
+            border-bottom: none;
         }
+        .cta-section .container {
+             background-color: var(--primary-text-color);
+             color: white;
+             padding: 50px 30px;
+             border-radius: 24px;
+        }
+
         .cta-section h2 {
-            font-size: 3rem;
-            margin-bottom: 30px;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
         }
 
-        /* --- Footer --- */
+        /* --- Footer Estático --- */
         .main-footer {
-            padding: 40px 0;
-            text-align: center;
-            color: var(--secondary-text-color);
+            background-color: var(--bg-light-gray);
+            border-top: 1px solid var(--border-color);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
             font-size: 0.9rem;
+            color: var(--secondary-text-color);
+            text-align: center;
+        }
+        .main-footer a {
+            color: var(--secondary-text-color);
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+        .main-footer a:hover {
+            color: var(--primary-text-color);
+        }
+        .main-footer svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
         }
 
-        /* --- Scroll Animations --- */
+        /* --- Animaciones de Scroll --- */
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity var(--transition-speed) ease-out, transform var(--transition-speed) ease-out;
+            transition: opacity 0.8s var(--ease-out-quint), transform 0.8s var(--ease-out-quint);
         }
         .reveal-on-scroll.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 1; transform: translateY(0);
         }
 
-        /* --- Responsive Design --- */
-        @media (max-width: 992px) {
-            .hero-content h1 { font-size: 3.5rem; }
-        }
-
+        /* --- Media Queries --- */
         @media (max-width: 768px) {
-            .content-section { padding: 80px 0; }
-            .hero-content h1 { font-size: 2.5rem; letter-spacing: -1px; }
-            .hero-content p { font-size: 1.1rem; }
-            .viewer-title h2, .cta-section h2 { font-size: 2rem; }
-            .main-header { padding: 15px 0; }
-            .cta-button { padding: 10px 24px; }
+            .content-section { padding: 60px 0; }
+            .hero-content h1 { font-size: 2.5rem; letter-spacing: -1.5px; }
+            .hero-content p { font-size: 1rem; }
+            .section-title h2, .cta-section h2 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="container">
-            <a href="#" class="logo">
-                <img src="https://penagos.com/wp-content/uploads/2020/04/logo-2.png" alt="Logo Penagos">
-            </a>
-            <a href="mailto:ventas@penagos.com?subject=Cotización%20Despulpadora%20Serie%20DCV" class="cta-button">Cotizar ahora</a>
+    <div id="splash-screen">
+        <div class="splash-content">
+            <svg class="github-logo" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297 24 5.67 18.627.297 12 .297z"/></svg>
+            <p class="developer-text">Desarrollado por <strong>Jonathan Jerez</strong></p>
+            <a class="github-link" href="https://github.com/legend20021" target="_blank" rel="noopener noreferrer">@legend20021</a>
         </div>
-    </header>
+    </div>
 
-    <main>
-        <section class="hero-section">
-            <div class="container hero-content reveal-on-scroll">
-                <span class="subtitle">Despulpadora de Café Serie DCV</span>
-                <h1>Ingeniería Superior para un Grano Perfecto.</h1>
-                <p>Descubra la máquina que redefine la eficiencia y la calidad en la primera etapa del beneficio. Precisión, durabilidad y un rendimiento excepcional en cada cereza.</p>
-                <a href="#viewer" class="cta-button">Explorar Modelo 3D</a>
-            </div>
-        </section>
-
-        <section class="content-section features-section">
-            <div class="container features-grid">
-                <div class="feature-item reveal-on-scroll">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <h3>Máxima Eficiencia</h3>
-                    <p>Procesa más café en menos tiempo. Su diseño optimizado asegura un flujo constante y minimiza el desperdicio, aumentando su productividad.</p>
-                </div>
-                <div class="feature-item reveal-on-scroll">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M3 12h18" /></svg>
-                    <h3>Cero Daño al Grano</h3>
-                    <p>La camisa de despulpado y los puntos fijos de última generación tratan cada cereza con delicadeza, preservando la integridad del grano para un café de mayor calidad.</p>
-                </div>
-                <div class="feature-item reveal-on-scroll">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
-                    <h3>Construcción Robusta</h3>
-                    <p>Fabricada con materiales de alta resistencia para soportar las condiciones más exigentes. Una inversión duradera que garantiza años de operación sin fallos.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="viewer" class="content-section viewer-section">
+    <div class="page-content">
+        <header class="main-header">
             <div class="container">
-                <div class="viewer-title reveal-on-scroll">
-                    <h2>Explore cada detalle.</h2>
-                </div>
-                <div class="viewer-wrapper reveal-on-scroll">
-                    <iframe src="https://www.lookiar.com/models/4f73959e9307ce5e526e659ee48f5a2b/view" frameborder="0" allow="xr-spatial-tracking *;fullscreen *"></iframe>
-                </div>
+                <a href="#" class="logo">
+                    <img src="https://penagos.com/wp-content/uploads/2020/04/logo-2.png" alt="Logo Penagos">
+                </a>
             </div>
-        </section>
-        
-        <section class="content-section cta-section">
-            <div class="container reveal-on-scroll">
-                <h2>Lista para transformar su producción.</h2>
-                <a href="mailto:ventas@penagos.com?subject=Cotización%20Despulpadora%20Serie%20DCV" class="cta-button">Solicitar una Cotización</a>
-            </div>
-        </section>
-    </main>
+        </header>
+
+        <main>
+            <section class="hero-section">
+                <div class="container hero-content reveal-on-scroll">
+                    <span class="subtitle">Selecto Módulo Clasificador</span>
+                    <h1>Innovación en Despulpado y Clasificación.</h1>
+                    <p>Un equipo que combina despulpado y clasificación sin usar agua. Su pechero flexible conserva la calidad del grano y cuida el medio ambiente.</p>
+                </div>
+            </section>
+            
+            <section id="viewer" class="content-section viewer-section">
+                <div class="container">
+                    <div class="section-title reveal-on-scroll">
+                        <h2>Explore el Módulo</h2>
+                    </div>
+                    <div class="viewer-wrapper reveal-on-scroll">
+                        <iframe src="https://www.lookiar.com/models/4f73959e9307ce5e526e659ee48f5a2b/view" allow="xr-spatial-tracking *;fullscreen *"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section features-section">
+                <div class="container">
+                     <div class="section-title reveal-on-scroll">
+                        <h2>Ventajas Clave</h2>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-item reveal-on-scroll">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+                            <h3>Pechero Flexible</h3>
+                            <p>Calibración rápida con un simple giro, ideal para distintas variedades y tamaños de grano.</p>
+                        </div>
+                        <div class="feature-item reveal-on-scroll">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <h3>Despulpado Selectivo</h3>
+                            <p>Procesa café con hasta un 20% de granos inmaduros, garantizando máxima selectividad.</p>
+                        </div>
+                        <div class="feature-item reveal-on-scroll">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096V18.25a1.125 1.125 0 01-1.125 1.125H4.125A1.125 1.125 0 013 18.25V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" /></svg>
+                            <h3>Separación Eficiente</h3>
+                            <p>Criba rotativa que separa los granos por calidad, asegurando un resultado superior.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="content-section cta-section">
+                <div class="container reveal-on-scroll">
+                    <h2>Construya un diferencial para su café.</h2>
+                    <a href="https://wa.me/573187284464" target="_blank" class="cta-button">Contactar por WhatsApp</a>
+                </div>
+            </section>
+        </main>
+    </div>
 
     <footer class="main-footer">
-        <div class="container">
-            Penagos Hermanos &copy; 2025. Ingeniería y tradición para el campo.
-        </div>
+        <p>Desarrollado por Jonathan Jerez</p>
+        <a href="https://github.com/legend20021" target="_blank" rel="noopener noreferrer" aria-label="Perfil de GitHub">
+            <svg viewBox="0 0 24 24"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297 24 5.67 18.627.297 12 .297z"/></svg>
+        </a>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const splashScreen = document.getElementById('splash-screen');
+            const pageContent = document.querySelector('.page-content');
+            
+            setTimeout(() => {
+                if (splashScreen) {
+                    splashScreen.classList.add('hidden');
+                }
+                if (pageContent) {
+                    pageContent.classList.add('visible');
+                }
+            }, 4000);
+
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.15
+                threshold: 0.2
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // Dejar de observar una vez que es visible
+                        observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            // Observar todos los elementos que tienen la clase de revelado
             const elementsToReveal = document.querySelectorAll('.reveal-on-scroll');
             elementsToReveal.forEach(element => {
                 observer.observe(element);
