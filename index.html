@@ -21,6 +21,7 @@
             --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
             --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
             --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --header-height: 70px; /* Altura del nuevo header */
         }
 
         * {
@@ -38,6 +39,7 @@
             background-color: var(--bg-color);
             color: var(--primary-text-color);
             overflow-x: hidden;
+            padding-top: var(--header-height); /* Espacio para el header fijo */
         }
         
         /* --- Transición Splash Screen --- */
@@ -86,27 +88,20 @@
         }
 
         .splash-content .github-logo {
-            width: 70px;
-            height: 70px;
+            width: 70px; height: 70px;
             fill: var(--primary-text-color);
             margin-bottom: 20px;
             animation: logo-flip-in 1.2s var(--ease-out-back) forwards;
         }
 
         .splash-content .developer-text {
-            font-size: 1.3rem;
-            color: var(--secondary-text-color);
-            margin-bottom: 15px;
+            font-size: 1.3rem; color: var(--secondary-text-color); margin-bottom: 15px;
             animation: text-fade-up 0.8s ease-out forwards 0.8s;
         }
         
         .splash-content .github-link {
-            display: inline-block;
-            text-decoration: none;
-            color: var(--primary-text-color);
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: color 0.3s;
+            display: inline-block; text-decoration: none; color: var(--primary-text-color);
+            font-weight: 700; font-size: 1.1rem; transition: color 0.3s;
             animation: text-fade-up 0.8s ease-out forwards 1.2s;
         }
         
@@ -120,119 +115,93 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Diseño General --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
+        /* --- NUEVO BANNER SUPERIOR (HEADER) --- */
         .main-header {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px 0;
+            height: var(--header-height);
             z-index: 100;
-        }
-
-        .main-header .container {
+            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            transition: box-shadow 0.3s ease;
         }
         
         .logo img {
-            height: 45px;
+            height: 40px; /* Ligeramente más pequeño para el banner fijo */
         }
         
+        /* --- Botones --- */
         .cta-button, .hero-button {
-            text-decoration: none;
-            padding: 14px 32px;
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 1.1rem;
+            text-decoration: none; padding: 12px 28px; border-radius: 100px;
+            font-weight: 700; font-size: 1rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: none;
-            cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px;
+            border: none; cursor: pointer;
         }
 
         .cta-button:hover, .hero-button:hover {
             transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .cta-button {
-            background-color: var(--whatsapp-color);
-            color: white;
+            background-color: var(--whatsapp-color); color: white;
         }
 
         .hero-button {
-            background-color: var(--accent-color);
-            color: var(--primary-text-color);
+            background-color: var(--accent-color); color: var(--primary-text-color);
         }
 
+        /* --- DISEÑO COMPACTO --- */
         .hero-section {
             background-color: var(--bg-light-gray);
-            min-height: 600px;
+            min-height: calc(100vh - var(--header-height));
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 80px;
-            padding-bottom: 40px;
+            padding: 40px 20px;
         }
 
         .hero-content {
-            max-width: 750px;
+            max-width: 700px;
         }
         
         .hero-content .subtitle {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary-text-color);
-            opacity: 0.7;
-            margin-bottom: 10px;
+            font-size: 1.1rem; font-weight: 700; color: var(--primary-text-color);
+            opacity: 0.7; margin-bottom: 8px;
         }
 
         .hero-content h1 {
-            font-size: 3.8rem;
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -2px;
-            margin-bottom: 15px;
+            font-size: 3.5rem; font-weight: 900; line-height: 1.1;
+            letter-spacing: -2px; margin-bottom: 15px;
         }
 
         .hero-content p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: var(--secondary-text-color);
-            max-width: 600px;
-            margin: 0 auto 30px auto;
+            font-size: 1.1rem; line-height: 1.6; color: var(--secondary-text-color);
+            max-width: 600px; margin: 0 auto 25px auto;
         }
         
         .content-section {
-            padding: 70px 0;
+            padding: 60px 0; /* Espaciado reducido */
             border-bottom: 1px solid var(--border-color);
         }
         
         .section-title h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            text-align: center;
-            margin-bottom: 40px;
+            font-size: 2.2rem; font-weight: 700; letter-spacing: -1px;
+            text-align: center; margin-bottom: 35px;
         }
 
         .viewer-wrapper {
-            height: 60vh;
-            max-height: 550px;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            height: 60vh; max-height: 500px; border-radius: 20px;
+            overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.1);
             border: 1px solid var(--border-color);
         }
         .viewer-wrapper iframe {
@@ -242,77 +211,56 @@
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
+            gap: 25px; /* Espaciado reducido */
             text-align: center;
         }
 
         .feature-item h3 {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
+            font-size: 1.3rem; margin-bottom: 8px;
         }
 
         .feature-item p {
-            color: var(--secondary-text-color);
-            line-height: 1.5;
-            font-size: 0.95rem;
+            color: var(--secondary-text-color); line-height: 1.5; font-size: 0.95rem;
         }
 
         .feature-item svg {
-            width: 36px; height: 36px;
-            color: var(--accent-color);
+            width: 36px; height: 36px; color: var(--accent-color);
             margin-bottom: 15px;
         }
         
         .cta-section {
-            background-color: var(--bg-color);
-            text-align: center;
-            border-bottom: none;
+            background-color: var(--bg-color); text-align: center; border-bottom: none;
         }
         .cta-section .container {
-             background-color: var(--primary-text-color);
-             color: white;
-             padding: 50px 30px;
-             border-radius: 24px;
+             background-color: var(--primary-text-color); color: white;
+             padding: 50px 30px; border-radius: 20px;
         }
 
         .cta-section h2 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
+            font-size: 2rem; margin-bottom: 20px; letter-spacing: -1px;
         }
 
         /* --- Footer --- */
         .main-footer {
-            background-color: var(--bg-light-gray);
-            border-top: 1px solid var(--border-color);
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.9rem;
-            color: var(--secondary-text-color);
+            background-color: var(--bg-light-gray); border-top: 1px solid var(--border-color);
+            padding: 15px 20px; display: flex; justify-content: center; align-items: center;
+            gap: 12px; font-size: 0.9rem; color: var(--secondary-text-color);
             text-align: center;
         }
         .main-footer a {
-            color: var(--secondary-text-color);
-            display: inline-flex;
-            align-items: center;
+            color: var(--secondary-text-color); display: inline-flex; align-items: center;
             transition: color 0.3s ease;
         }
         .main-footer a:hover {
             color: var(--primary-text-color);
         }
         .main-footer svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
+            width: 20px; height: 20px; fill: currentColor;
         }
 
         /* --- Animaciones de Scroll --- */
         .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
+            opacity: 0; transform: translateY(30px);
             transition: opacity 0.8s var(--ease-out-quint), transform 0.8s var(--ease-out-quint);
         }
         .reveal-on-scroll.is-visible {
@@ -321,8 +269,10 @@
 
         /* --- Media Queries --- */
         @media (max-width: 768px) {
-            .content-section { padding: 60px 0; }
-            .hero-content h1 { font-size: 2.5rem; letter-spacing: -1.5px; }
+            :root { --header-height: 60px; }
+            .logo img { height: 35px; }
+            .content-section { padding: 50px 0; }
+            .hero-content h1 { font-size: 2.2rem; letter-spacing: -1px; }
             .hero-content p { font-size: 1rem; }
             .section-title h2, .cta-section h2 { font-size: 1.8rem; }
         }
@@ -340,17 +290,15 @@
 
     <div class="page-content">
         <header class="main-header">
-            <div class="container">
-                <a href="#" class="logo">
-                    <img src="https://penagos.com/wp-content/uploads/2020/04/logo-2.png" alt="Logo Penagos">
-                </a>
-            </div>
+            <a href="#" class="logo">
+                <img src="https://penagos.com/wp-content/uploads/2020/04/logo-2.png" alt="Logo Penagos">
+            </a>
         </header>
 
         <main>
             <section class="hero-section">
                 <div class="container hero-content reveal-on-scroll">
-                    <span class="subtitle">Despulpadora de Café Serie DCV</span>
+                    <span class="subtitle">Selecto Módulo Clasificador</span>
                     <h1>Ingeniería Superior para un Grano Perfecto.</h1>
                     <p>Descubra la máquina que redefine la eficiencia y la calidad en la primera etapa del beneficio. Precisión, durabilidad y un rendimiento excepcional en cada cereza.</p>
                     <a href="#viewer" class="hero-button">Explorar Modelo 3D</a>
