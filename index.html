@@ -120,7 +120,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Diseño Compacto --- */
+        /* --- Diseño General --- */
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -146,9 +146,7 @@
             height: 45px;
         }
         
-        .cta-button {
-            background-color: var(--whatsapp-color);
-            color: white;
+        .cta-button, .hero-button {
             text-decoration: none;
             padding: 14px 32px;
             border-radius: 100px;
@@ -158,11 +156,23 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            border: none;
+            cursor: pointer;
         }
 
-        .cta-button:hover {
+        .cta-button:hover, .hero-button:hover {
             transform: translateY(-3px) scale(1.03);
             box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .cta-button {
+            background-color: var(--whatsapp-color);
+            color: white;
+        }
+
+        .hero-button {
+            background-color: var(--accent-color);
+            color: var(--primary-text-color);
         }
 
         .hero-section {
@@ -183,7 +193,8 @@
         .hero-content .subtitle {
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--accent-color);
+            color: var(--primary-text-color);
+            opacity: 0.7;
             margin-bottom: 10px;
         }
 
@@ -200,7 +211,7 @@
             line-height: 1.6;
             color: var(--secondary-text-color);
             max-width: 600px;
-            margin: 0 auto;
+            margin: 0 auto 30px auto;
         }
         
         .content-section {
@@ -270,7 +281,7 @@
             letter-spacing: -1px;
         }
 
-        /* --- Footer Estático --- */
+        /* --- Footer --- */
         .main-footer {
             background-color: var(--bg-light-gray);
             border-top: 1px solid var(--border-color);
@@ -339,9 +350,10 @@
         <main>
             <section class="hero-section">
                 <div class="container hero-content reveal-on-scroll">
-                    <span class="subtitle">Selecto Módulo Clasificador</span>
-                    <h1>Innovación en Despulpado y Clasificación.</h1>
-                    <p>Un equipo que combina despulpado y clasificación sin usar agua. Su pechero flexible conserva la calidad del grano y cuida el medio ambiente.</p>
+                    <span class="subtitle">Despulpadora de Café Serie DCV</span>
+                    <h1>Ingeniería Superior para un Grano Perfecto.</h1>
+                    <p>Descubra la máquina que redefine la eficiencia y la calidad en la primera etapa del beneficio. Precisión, durabilidad y un rendimiento excepcional en cada cereza.</p>
+                    <a href="#viewer" class="hero-button">Explorar Modelo 3D</a>
                 </div>
             </section>
             
