@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio Corporativo - Penagos | Innovación para el Agro</title>
+    <title>Penagos | Despulpadora de Café Serie DCV</title>
+    
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,15 +13,14 @@
 
     <style>
         :root {
-            --primary-color: #1a1a1a;
-            --secondary-color: #FFFFFF;
+            --bg-color: #ffffff;
+            --bg-light-gray: #f7f7f7;
+            --primary-text-color: #1d1d1f;
+            --secondary-text-color: #555555;
             --accent-color: #FAB900;
-            --text-color: #333333;
-            --text-light: #666666;
-            --bg-light: #f8f9fa;
-            --font-family: 'Roboto', sans-serif;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-            --border-radius: 12px;
+            --border-color: #e5e5e5;
+            --font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            --transition-speed: 0.6s;
         }
 
         * {
@@ -34,27 +35,25 @@
 
         body {
             font-family: var(--font-family);
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            line-height: 1.7;
+            background-color: var(--bg-color);
+            color: var(--primary-text-color);
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1140px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* --- Encabezado --- */
+        /* --- Header --- */
         .main-header {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 15px 0;
-            border-bottom: 1px solid #e9e9e9;
-            position: sticky;
+            position: absolute;
             top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 100;
         }
 
         .main-header .container {
@@ -62,243 +61,175 @@
             justify-content: space-between;
             align-items: center;
         }
-
+        
         .logo img {
             height: 45px;
         }
-
-        .main-nav a {
-            text-decoration: none;
-            color: var(--primary-color);
-            margin-left: 30px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .main-nav a:hover {
-            color: var(--accent-color);
-        }
-
-        /* --- Sección Hero --- */
-        .hero {
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://penagos.com/wp-content/uploads/2020/07/bg-home-1-1.jpg');
-            background-size: cover;
-            background-position: center;
-            color: var(--secondary-color);
-            text-align: center;
-            padding: 120px 0;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            font-weight: 300;
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-
+        
         .cta-button {
             background-color: var(--accent-color);
-            color: var(--primary-color);
+            color: var(--primary-text-color);
             text-decoration: none;
-            padding: 15px 35px;
-            border-radius: 50px;
-            font-weight: bold;
-            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 700;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* --- Estilo de Secciones Generales --- */
-        .section {
-            padding: 80px 0;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-
-        .section-title p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* --- Sección Trayectoria --- */
-        .about-section {
-            background: var(--secondary-color);
-        }
-        .about-content {
+        /* --- Hero Section --- */
+        .hero-section {
+            background-color: var(--bg-light-gray);
+            height: 100vh;
+            min-height: 600px;
             display: flex;
             align-items: center;
-            gap: 60px;
-        }
-        .about-text {
-            flex: 1;
-        }
-        .about-text .highlight {
-            font-size: 4rem;
-            font-weight: 900;
-            color: var(--accent-color);
-            line-height: 1;
-        }
-        .about-text h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-        .about-image {
-            flex: 1;
-        }
-        .about-image img {
-            width: 100%;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-        
-        /* --- Sección Pilares --- */
-        .pillars-section {
-            background-color: var(--bg-light);
-        }
-        .pillars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        .pillar-card {
-            background: var(--secondary-color);
-            padding: 40px;
-            border-radius: var(--border-radius);
+            padding-top: 80px; /* Offset for header */
             text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-        .pillar-card:hover {
-            transform: translateY(-10px);
-        }
-        .pillar-card svg {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 20px;
-            color: var(--accent-color);
-        }
-        .pillar-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
         }
 
-        /* --- Sección Portafolio/Maquinaria --- */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+        .hero-content {
+            max-width: 750px;
         }
-        .portfolio-item {
-            background: var(--secondary-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        .portfolio-item:hover {
-            transform: translateY(-5px);
-        }
-        .portfolio-item-main {
-            grid-column: 1 / 3; /* El item 3D ocupa 2 columnas */
-            grid-row: 1 / 3; /* y 2 filas */
-        }
-        .portfolio-item .viewer-container {
-            width: 100%;
-            height: 100%;
-            min-height: 400px; /* Altura mínima para el visor */
-        }
-        .portfolio-item .viewer-container iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .portfolio-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-        .portfolio-item-info {
-            padding: 20px;
-        }
-        .portfolio-item-info h4 {
+        
+        .hero-content .subtitle {
             font-size: 1.2rem;
-            margin-bottom: 5px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--secondary-text-color);
+            margin-bottom: 30px;
+        }
+
+        /* --- General Section Styling --- */
+        .content-section {
+            padding: 100px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* --- 3D Viewer Section --- */
+        .viewer-section .container {
+            max-width: 1200px;
+        }
+        .viewer-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .viewer-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .viewer-wrapper {
+            position: relative; /* Añadido para posicionar el loader */
+            height: 70vh;
+            max-height: 650px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-light-gray); /* Fondo mientras carga */
+        }
+        .viewer-wrapper a-scene {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- Indicador de Carga --- */
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            color: var(--primary-text-color);
+            transition: opacity 0.5s ease;
+        }
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* --- Features Section --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .feature-item p {
+            color: var(--secondary-text-color);
+            line-height: 1.6;
+        }
+        .feature-item svg {
+            width: 40px;
+            height: 40px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        /* --- Call to Action Section --- */
+        .cta-section {
+            background-color: var(--primary-text-color);
+            color: #ffffff;
+            text-align: center;
+        }
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
         }
 
         /* --- Footer --- */
         .main-footer {
-            background-color: var(--primary-color);
-            color: #a0a0a0;
-            padding: 60px 0 30px;
-            margin-top: 80px;
-        }
-        .footer-content {
+            padding: 40px 0;
             text-align: center;
-        }
-        .footer-content .logo img {
-            height: 50px;
-            margin-bottom: 20px;
-            filter: brightness(0) invert(1);
-        }
-        .footer-content p {
-            max-width: 500px;
-            margin: 0 auto 20px;
-        }
-        .footer-bottom {
-            border-top: 1px solid #333;
-            padding-top: 20px;
-            margin-top: 40px;
-            text-align: center;
+            color: var(--secondary-text-color);
             font-size: 0.9rem;
         }
 
-        /* --- Responsividad --- */
-        @media (max-width: 992px) {
-            .about-content {
-                flex-direction: column;
-            }
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .portfolio-item-main {
-                grid-column: 1 / -1; /* Ocupa todo el ancho */
-                grid-row: auto;
-            }
+        /* --- Scroll Animations --- */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity var(--transition-speed) ease-out, transform var(--transition-speed) ease-out;
         }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 992px) { .hero-content h1 { font-size: 3.5rem; } }
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .section { padding: 60px 0; }
-            .main-header .container { flex-direction: column; gap: 15px; }
-            .main-nav { margin-top: 10px; }
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
+            .content-section { padding: 80px 0; }
+            .hero-content h1 { font-size: 2.5rem; letter-spacing: -1px; }
+            .hero-content p { font-size: 1.1rem; }
+            .viewer-title h2, .cta-section h2 { font-size: 2rem; }
+            .main-header { padding: 15px 0; }
+            .cta-button { padding: 10px 24px; }
         }
     </style>
 </head>
@@ -309,111 +240,105 @@
             <a href="#" class="logo">
                 <img src="https://penagos.com/wp-content/uploads/2020/04/logo-2.png" alt="Logo Penagos">
             </a>
-            <nav class="main-nav">
-                <a href="#about">Nosotros</a>
-                <a href="#portfolio">Maquinaria</a>
-                <a href="#pillars">Sostenibilidad</a>
-                <a href="#contact">Contacto</a>
-            </nav>
+            <a href="mailto:ventas@penagos.com?subject=Cotización%20Despulpadora%20Serie%20DCV" class="cta-button">Cotizar ahora</a>
         </div>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Innovación que transforma el campo</h1>
-                <p>Liderando la evolución del procesamiento agrícola con tecnología de vanguardia y un legado de calidad inigualable.</p>
-                <a href="#portfolio" class="cta-button">Ver Maquinaria</a>
+        <section class="hero-section">
+            <div class="container hero-content reveal-on-scroll">
+                <span class="subtitle">Despulpadora de Café Serie DCV</span>
+                <h1>Ingeniería Superior para un Grano Perfecto.</h1>
+                <p>Descubra la máquina que redefine la eficiencia y la calidad en la primera etapa del beneficio. Precisión, durabilidad y un rendimiento excepcional en cada cereza.</p>
+                <a href="#viewer" class="cta-button">Explorar Modelo 3D</a>
             </div>
         </section>
 
-        <section id="about" class="section about-section">
-            <div class="container">
-                <div class="about-content">
-                    <div class="about-text">
-                        <span class="highlight">150+</span>
-                        <h3>Años de historia forjando el futuro del agro.</h3>
-                        <p>Desde nuestra fundación, en Penagos hemos sido pioneros en el desarrollo de soluciones para el beneficio del café y otros granos. Nuestra trayectoria es el testimonio de un compromiso inquebrantable con la innovación, la calidad y la prosperidad de nuestros clientes en todo el mundo.</p>
-                    </div>
-                    <div class="about-image">
-                        <img src="https://penagos.com/wp-content/uploads/2020/07/img-about-1.jpg" alt="Instalaciones de Penagos">
-                    </div>
+        <section class="content-section features-section">
+            <div class="container features-grid">
+                <div class="feature-item reveal-on-scroll">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <h3>Máxima Eficiencia</h3>
+                    <p>Procesa más café en menos tiempo. Su diseño optimizado asegura un flujo constante y minimiza el desperdicio, aumentando su productividad.</p>
+                </div>
+                <div class="feature-item reveal-on-scroll">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M3 12h18" /></svg>
+                    <h3>Cero Daño al Grano</h3>
+                    <p>La camisa de despulpado y los puntos fijos de última generación tratan cada cereza con delicadeza, preservando la integridad del grano para un café de mayor calidad.</p>
+                </div>
+                <div class="feature-item reveal-on-scroll">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+                    <h3>Construcción Robusta</h3>
+                    <p>Fabricada con materiales de alta resistencia para soportar las condiciones más exigentes. Una inversión duradera que garantiza años de operación sin fallos.</p>
                 </div>
             </div>
         </section>
 
-        <section id="pillars" class="section pillars-section">
+        <section id="viewer" class="content-section viewer-section">
             <div class="container">
-                <div class="section-title">
-                    <h2>Nuestros Pilares Fundamentales</h2>
-                    <p>Nuestra operación se sustenta en tres principios que garantizan la excelencia y el impacto positivo de cada solución que entregamos.</p>
+                <div class="viewer-title reveal-on-scroll">
+                    <h2>Explore cada detalle.</h2>
                 </div>
-                <div class="pillars-grid">
-                    <div class="pillar-card">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>
-                        <h3>Tecnología</h3>
-                        <p>Desarrollamos e integramos tecnología de punta para maximizar la eficiencia, el rendimiento y la rentabilidad de su producción agrícola.</p>
-                    </div>
-                    <div class="pillar-card">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.07a2.25 2.25 0 0 1-2.25 2.25h-10.5a2.25 2.25 0 0 1-2.25-2.25v-4.07a2.25 2.25 0 0 1 2.25-2.25h10.5a2.25 2.25 0 0 1 2.25 2.25Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75V3m0 9.75-2.25-2.25M12 12.75l2.25-2.25" /></svg>
-                        <h3>Sostenibilidad</h3>
-                        <p>Estamos comprometidos con el desarrollo de maquinaria eco-eficiente que minimiza el consumo de agua y energía, protegiendo el medio ambiente.</p>
-                    </div>
-                    <div class="pillar-card">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
-                        <h3>Calidad</h3>
-                        <p>Utilizamos materiales de la más alta resistencia y durabilidad, garantizando equipos robustos y confiables que perduran a través del tiempo.</p>
-                    </div>
+                <div class="viewer-wrapper reveal-on-scroll">
+                    <div id="loader" class="loader">Cargando modelo 3D...</div>
+                    <a-scene embedded renderer="colorManagement: true;">
+                        <a-assets>
+                            <a-asset-item id="machine-model" src="untitled.glb"></a-asset-item>
+                        </a-assets>
+                        <a-entity environment="preset: studio; groundColor: #444; shadow: true;"></a-entity>
+                        <a-entity id="model-entity" gltf-model="#machine-model" position="0 1 0" shadow="cast: true"></a-entity>
+                        <a-entity camera look-controls orbit-controls="target: 0 1 0; minDistance: 1.5; maxDistance: 8; initialPosition: 2 1.5 2.5"></a-entity>
+                    </a-scene>
                 </div>
             </div>
         </section>
         
-        <section id="portfolio" class="section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Maquinaria de Precisión</h2>
-                    <p>Explore nuestra gama de soluciones diseñadas para cada etapa del procesamiento post-cosecha.</p>
-                </div>
-                <div class="portfolio-grid">
-                    <div class="portfolio-item portfolio-item-main">
-                        <div class="viewer-container">
-                            <iframe src="https://www.lookiar.com/models/faa5d81bd0525243e0c47480a2b55302/view" allow="xr-spatial-tracking *;fullscreen *"></iframe>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="https://penagos.com/wp-content/uploads/2021/04/IMG_3960-scaled-e1617739564172-1024x729.jpg" alt="Máquina 2">
-                        <div class="portfolio-item-info">
-                            <h4>Clasificadora Densimétrica</h4>
-                            <p class="text-light">Separación por densidad para granos de máxima calidad.</p>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="https://penagos.com/wp-content/uploads/2020/07/DSC0225-1-1024x683.jpg" alt="Máquina 3">
-                        <div class="portfolio-item-info">
-                            <h4>Secadora de Café</h4>
-                            <p class="text-light">Secado uniforme para preservar el perfil de la taza.</p>
-                        </div>
-                    </div>
-                </div>
+        <section class="content-section cta-section">
+            <div class="container reveal-on-scroll">
+                <h2>Lista para transformar su producción.</h2>
+                <a href="mailto:ventas@penagos.com?subject=Cotización%20Despulpadora%20Serie%20DCV" class="cta-button">Solicitar una Cotización</a>
             </div>
         </section>
-
     </main>
 
-    <footer id="contact" class="main-footer">
+    <footer class="main-footer">
         <div class="container">
-            <div class="footer-content">
-                <a href="#" class="logo">
-                    <img src="https://penagos.com/wp-content/uploads/2020/04/logo-2.png" alt="Logo Penagos Blanco">
-                </a>
-                <p>Contáctenos para descubrir cómo nuestra tecnología puede potenciar su negocio. Estamos listos para ser su aliado estratégico en el camino hacia la excelencia.</p>
-                <a href="mailto:info@penagos.com" class="cta-button">Iniciar Conversación</a>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Penagos. Creado con inspiración en la tradición y la innovación.</p>
-            </div>
+            Penagos Hermanos &copy; 2025. Ingeniería y tradición para el campo.
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Script para el indicador de carga del modelo 3D ---
+            const modelEntity = document.querySelector('#model-entity');
+            const loader = document.querySelector('#loader');
+
+            modelEntity.addEventListener('model-loaded', () => {
+                // El modelo ha terminado de cargar, ocultamos el indicador
+                loader.classList.add('hidden');
+            });
+            
+            // --- Script para las animaciones de scroll ---
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToReveal = document.querySelectorAll('.reveal-on-scroll');
+            elementsToReveal.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
 
 </body>
 </html>
