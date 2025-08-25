@@ -86,8 +86,9 @@
         #prank-overlay.visible { opacity: 1; visibility: visible; }
         .prank-container { max-width: 500px; }
         .prank-container h2 {
-            font-size: 2rem; color: var(--error-color); margin-bottom: 20px;
-            letter-spacing: -1px;
+            font-size: 1.8rem; color: var(--primary-text-color); margin-bottom: 20px;
+            letter-spacing: -0.5px;
+            transition: color 0.5s ease;
         }
         .progress-bar {
             width: 100%; height: 10px; background-color: rgba(0,0,0,0.1);
@@ -95,16 +96,8 @@
         }
         .progress-bar-inner {
             width: 0%; height: 100%; background-color: var(--accent-color);
-            transition: width 1s var(--ease-out-quint);
+            transition: width 1.5s var(--ease-out-quint);
         }
-        #prank-button {
-            background-color: var(--primary-text-color); color: white;
-            padding: 15px 40px; border-radius: 100px; font-weight: 700;
-            font-size: 1rem; border: none; cursor: pointer;
-            transition: transform 0.3s var(--ease-out-back);
-        }
-        #prank-button:hover { transform: scale(1.05); }
-        #prank-button:active { transform: scale(0.98); }
         .final-message {
             display: none;
             text-align: center;
@@ -143,11 +136,10 @@
     <div id="prank-overlay">
         <div class="prank-container">
             <div id="game-elements">
-                <h2 id="prank-message">Error: Módulo 3D desconectado.</h2>
+                <h2 id="prank-message">Iniciando conexión con módulo 3D...</h2>
                 <div class="progress-bar">
                     <div id="progress-inner" class="progress-bar-inner"></div>
                 </div>
-                <button id="prank-button">Intentar Reconexión</button>
             </div>
             <div id="final-message" class="final-message">
                 <h2>Sistema... temporalmente fuera de servicio.</h2>
@@ -181,36 +173,37 @@
             const pageContent = document.querySelector('.page-content');
             const prankOverlay = document.getElementById('prank-overlay');
 
-            // --- Lógica de la Broma ---
+            // --- Lógica de la Broma Automática ---
             const prankMessage = document.getElementById('prank-message');
-            const prankButton = document.getElementById('prank-button');
             const progressInner = document.getElementById('progress-inner');
             const gameElements = document.getElementById('game-elements');
             const finalMessage = document.getElementById('final-message');
             
             const prankStages = [
-                { message: "Fallo de conexión. Reintentando...", buttonText: "Forzar Sincronización", progress: "45%" },
-                { message: "Inconsistencia de paquetes. Depurando...", buttonText: "Golpear Suavemente", progress: "70%", shake: true },
-                { message: "¡Casi! Se requiere protocolo de emergencia.", buttonText: "Activar Protocolo Penagos", progress: "95%" },
-                { message: "Protocolo activado. El sistema ahora está...", buttonText: "Finalizando...", progress: "100%" }
+                { message: "Sincronizando con servidor...", progress: "25%", delay: 2000 },
+                { message: "Fallo de conexión. Reintentando...", progress: "45%", delay: 2000, error: true },
+                { message: "Inconsistencia de paquetes. Depurando...", progress: "70%", delay: 2500, shake: true },
+                { message: "¡Conexión casi establecida!", progress: "95%", delay: 1500 },
+                { message: "Error crítico del sistema.", progress: "100%", delay: 2000, error: true, final: true }
             ];
             let currentStage = 0;
 
-            prankButton.addEventListener('click', () => {
+            function runPrankSequence() {
                 if (currentStage >= prankStages.length) return;
 
                 const stage = prankStages[currentStage];
+                
                 prankMessage.textContent = stage.message;
-                prankButton.textContent = stage.buttonText;
                 progressInner.style.width = stage.progress;
+                
+                prankMessage.style.color = stage.error ? 'var(--error-color)' : 'var(--primary-text-color)';
 
                 if (stage.shake) {
                     prankOverlay.classList.add('shake');
                     setTimeout(() => prankOverlay.classList.remove('shake'), 500);
                 }
 
-                if (currentStage === prankStages.length - 1) {
-                    prankButton.disabled = true;
+                if (stage.final) {
                     setTimeout(() => {
                         gameElements.style.transition = 'opacity 0.5s';
                         gameElements.style.opacity = '0';
@@ -222,23 +215,28 @@
                              finalMessage.style.opacity = '1';
                         }, 500);
                     }, 1500);
+                } else {
+                    currentStage++;
+                    setTimeout(runPrankSequence, stage.delay);
                 }
-                
-                currentStage++;
-            });
+            }
 
             // --- Lógica de la Carga Inicial ---
             setTimeout(() => {
                 if (splashScreen) {
                     splashScreen.classList.add('hidden');
                 }
-                if (pageContent) {
-                    pageContent.classList.add('blurred'); // Pone borroso el fondo
-                }
-                if (prankOverlay) {
-                    prankOverlay.classList.add('visible'); // Muestra la broma
-                }
-            }, 2500); // Tiempo que dura la animación del splash screen
+                setTimeout(() => { // Espera a que termine la transición del splash
+                    if (pageContent) {
+                        pageContent.classList.add('blurred');
+                    }
+                    if (prankOverlay) {
+                        prankOverlay.classList.add('visible');
+                        // Inicia la secuencia automática de la broma
+                        setTimeout(runPrankSequence, 1000);
+                    }
+                }, 600);
+            }, 2500); // Duración de la animación del splash screen
         });
     </script>
 
